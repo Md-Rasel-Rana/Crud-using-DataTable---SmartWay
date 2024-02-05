@@ -17,6 +17,15 @@ Route::get('/', [DemoController::class,'UserForm']);
 Route::post('/send-user-Data', [DemoController::class,'UserSubmitForm']);
 Route::get('/List-data', [DemoController::class,'UserData']);
 Route::get('/delete-user/{id}', [DemoController::class,'UserDelete']);
+Route::delete('/delete-user/{id}', [DemoController::class,'UserDelete']);
+
+// Route for fetching user data
+Route::get('/get-user/{id}', [DemoController::class,'getUser']);
+
+// Route for updating user data
+Route::put('/update-user/{id}', [DemoController::class,'updateUser']);
+
+
 
 
 

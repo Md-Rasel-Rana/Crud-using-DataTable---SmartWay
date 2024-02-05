@@ -29,52 +29,6 @@
   </div>
 </div>
 </div>
-{{-- 
-<script>
-  listUser();
-  async function listUser() {
-    try {
-      let response = await axios.get("/List-data");
-      console.log(response.data); // Assuming response.data contains the user list
-      // Now you can handle the user list data and populate the table
-    } catch (error) {
-      console.error('Error fetching user list:', error);
-    }
-  }
-</script> --}}
-{{-- 
-<script>
-  listUser();
-  async function listUser() {
-    try {
-      let response = await axios.get("/List-data");
-      console.log(response.data); // Assuming response.data contains the user list
-      
-      let tableList = document.getElementById('tableList');
-      
-      // Clear existing table rows
-      tableList.innerHTML = '';
-      
-      // Iterate over the user list and create table rows
-      response.data.forEach(user => {
-        let row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${user.FirstName}</td>
-          <td>${user.LastName}</td>
-          <td>${user.Email}</td>
-          <td>${user.Password}</td>
-          <td>
-            <!-- Add action buttons here if needed -->
-          </td>
-        `;
-        
-        tableList.appendChild(row);
-      });
-    } catch (error) {
-      console.error('Error fetching user list:', error);
-    }
-  }
-</script> --}}
 
 <script>
 
@@ -82,12 +36,10 @@
   
   
   async function getList(){
-  
-  
       //showLoader();
       let res=await axios.get("/List-data");
      // hideLoader();
-     console.log(res);
+    // console.log(res);
       let tableList=$("#tableList");
       let tableData=$("#tableData");
   
@@ -107,25 +59,43 @@
                    </tr>`
           tableList.append(row)
       })
-  
-      $('.viewBtn').on('click', async function () {
-          let id = $(this).data('id');
-          let cus = $(this).data('cus');
-          await InvoiceDetails(cus,id)
-      })
-  
-      $('.deleteBtn').on('click',function () {
-          let id= $(this).data('id');
-          document.getElementById('deleteID').value=id;
-          $("#delete-modal").modal('show');
-      })
-  
+
+      $(document).on('click', '.deleteBtn', async function() {
+      let userId = $(this).data('id');
+    
+    try {
+        let response = await axios.delete(`/delete-user/${userId}`);
+        //console.log(response); // Assuming you want to log the response
+        // If deletion is successful, you can remove the row from the table
+        $(this).closest('tr').remove();
+        if(response.status == 200){
+        swal({
+            title: "Success!",
+            text: "User Data Delete successfully",
+            icon: "success",
+            button: "OK",
+        });
+    }
+        
+    } catch (error) {
+        console.error('Error deleting user:', error);
+    }
+});
+
+$('.viewBtn').on('click', async function () {
+           let id= $(this).data('id');
+           await FillUpUpdateForm(id);
+           $("#update-modal").modal('show');
+          
+    })
       new DataTable('#tableData',{
           order:[[0,'desc']],
           lengthMenu:[5,10,15,20,30]
       });
+
   
   }
+
   
   
   </script>

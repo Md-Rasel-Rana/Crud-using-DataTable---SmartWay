@@ -8,7 +8,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel"> <h2>Crud Form</h2></h5>
+          <h5 class="modal-title" id="exampleModalLabel"> <h2> User Form</h2></h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -39,7 +39,7 @@
       </div>
         </div>
         <div class="modal-footer">
-          <button type="button" id="modal-close" class="btn btn-secondary"  data-dismiss="modal">Close</button>
+          <button type="button" id="modal-close" class="btn btn-danger"  data-dismiss="modal">Close</button>
           <button type="button" onclick="save()" class="btn btn-primary">Save</button>
         </div>
       </div>
@@ -70,6 +70,7 @@ async function save() {
         console.log(res.data); // Assuming you want to log the response
         document.getElementById('modal-close').click();
         document.getElementById('save-form').reset();
+        getList();
     } catch (error) {
         console.error('Error:', error);
     }
